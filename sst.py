@@ -1,5 +1,6 @@
 import speech_recognition as sr
-from googletrans import Translator
+# from googletrans import Translator
+from deep_translator import GoogleTranslator
 import keyboard
 import threading
 import spacy
@@ -14,7 +15,7 @@ except:
 
 # Initialize recognizer and translator
 recognizer = sr.Recognizer()
-translator = Translator()
+# translator = Translator()
 
 # Supported language codes
 language_map = {
@@ -70,13 +71,14 @@ def continuous_listen(lang_code, stop_flag):
                 recognized = recognizer.recognize_google(audio, language=lang_code)
                 print("🗣 Recognized:", recognized)
 
-                src = lang_code.split('-')[0]
-                translated = translator.translate(recognized, src=src, dest="en")
-                print("🌐 Translated:", translated.text)
+                # src = lang_code.split('-')[0]
+                # translated = translator.translate(recognized, src=src, dest="en")
+                translated_text = GoogleTranslator(source='auto', target='en').translate(recognized)
+                print("🌐 Translated:", translated_text)
 
-                processed = preprocess(translated.text)
+                processed = preprocess(translated_text)
                 gloss = isl_gloss_spacy(processed)
-                full_transcript.append(translated.text)
+                full_transcript.append(translated_text)
 
                 print("📝 ISL Gloss:", gloss)
 

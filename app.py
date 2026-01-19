@@ -3,9 +3,12 @@ import cv2
 import time
 import re
 import threading
+
+# import speech_recognition as sr
 import speech_recognition as sr
 import spacy
-from googletrans import Translator
+# from googletrans import Translator
+from deep_translator import GoogleTranslator
 import tkinter as tk
 from tkinter import ttk, scrolledtext, messagebox, LabelFrame
 from PIL import Image, ImageTk
@@ -18,7 +21,7 @@ except OSError:
     exit()
 
 recognizer = sr.Recognizer()
-translator = Translator()
+# translator = Translator()
 
 language_map = {
     "English": "en-IN",
@@ -200,11 +203,12 @@ class ISLApp(tk.Tk):
                     recognized = recognizer.recognize_google(audio, language=lang_code)
                     self.log(f"🗣 Recognized: {recognized}")
 
-                    src = lang_code.split('-')[0]
-                    translated = translator.translate(recognized, src=src, dest="en")
-                    self.log(f"🌐 Translated: {translated.text}")
+                    # src = lang_code.split('-')[0]
+                    # translated = translator.translate(recognized, src=src, dest="en")
+                    translated_text = GoogleTranslator(source='auto', target='en').translate(recognized)
+                    self.log(f"🌐 Translated: {translated_text}")
 
-                    processed = preprocess(translated.text)
+                    processed = preprocess(translated_text)
                     gloss = isl_gloss_spacy(processed)
                     self.log(f"📝 ISL Gloss: {gloss}")
                     self.current_gloss.set(gloss)

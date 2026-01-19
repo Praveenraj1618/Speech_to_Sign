@@ -1,2 +1,9 @@
-pip install SpeechRecognition googletrans==4.0.0-rc1 keyboard spacy
-python -m spacy download en_core_web_sm
+SpeechRecognition
+deep-translator
+keyboard
+spacy
+streamlit
+watchdog
+opencv-python
+pillow
+pyaudio
